@@ -17,7 +17,7 @@ const initialState: UserState = {
   lastName: null,
   role: null,
   isAuthenticated: false,
-  isLoading: false,
+  isLoading: true,
 };
 
 export const userSlice = createSlice({
