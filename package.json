@@ -20,6 +20,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@reduxjs/toolkit": "^2.8.2",
     "@tanstack/react-router": "^1.121.34",
+    "@tanstack/react-router-devtools": "^1.121.34",
     "axios": "^1.10.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -38,6 +39,7 @@
   "devDependencies": {
     "@eslint/js": "^9.29.0",
     "@tailwindcss/postcss": "^4.1.10",
+    "@tanstack/router-plugin": "^1.121.37",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
