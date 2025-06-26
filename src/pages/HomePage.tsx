@@ -1,13 +1,23 @@
-import { Button } from "@/components/ui/button";
-
 export default function HomePage() {
   return (
-    <main className="flex flex-col items-center justify-center h-screen text-center">
-      <h1 className="text-4xl font-bold mb-4">Welcome to Essex Auto Works</h1>
+    <div className="flex flex-col items-center justify-center h-screen text-center">
+      <h1 className="text-4xl font-bold mb-4">
+        Welcome to Essex Auto Works Internal Web App
+      </h1>
+
       <p className="text-muted-foreground mb-6">
-        Book services, view invoices, and manage customers with ease.
+        This is a restricted service, if you feel you landed here by mistake,
+        you can find our public facing domain{" "}
+        <a
+          href="https://essexautoworks.co.uk/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Visit Essex Auto Works public website"
+          className="underline text-foreground hover:text-destructive visited:text-destructive"
+        >
+          here
+        </a>
       </p>
-      <Button>Get Started</Button>
-    </main>
+    </div>
   );
 }
