@@ -1,54 +1,99 @@
-# React + TypeScript + Vite
+# Essex Auto Works Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend for the Essex Auto Works invoice and customer management system, built with:
 
-Currently, two official plugins are available:
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS v4](https://tailwindcss.com/)
+- [ShadCN UI](https://ui.shadcn.com/)
+- [TanStack Router](https://tanstack.com/router)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [React Hook Form](https://react-hook-form.com/)
+- [Zod](https://zod.dev/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Setup
 
-## Expanding the ESLint configuration
+Install dependencies:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+npm install
+```
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
+Start the dev server:
+
+```bash
+npm run dev
+```
+
+## .env Example
+
+```
+VITE_DEV_API_URL=http://localhost:3000/
+VITE_PRODUCTION_API_URL=https://app.url.com/
+VITE_APP_NAME=Essex Auto Works
+VITE_ENABLE_DEBUG=true
+```
+
+## Features
+
+- Modern component library via ShadCN
+- Utility-first CSS with Tailwind v4
+- Alias-based imports (`@/components`, `@/lib`)
+- Secure password reset & email verification flow
+- Scalable architecture for invoices, customers, and user management
+
+## Project Structure
+
+```
+src/
+├─ components/       # ShadCN UI components
+├─ pages/            # Route-based pages
+├─ routes/           # TanStack route definitions
+├─ lib/              # API logic, helpers
+├─ store/            # Redux slices & setup
+├─ utils/            # Misc utilities
+├─ main.tsx          # Entry point
+```
+
+## 🧪 ESLint & TypeScript Setup
+
+For strict, type-aware linting, use:
+
+```ts
+parserOptions: {
+  project: ['./tsconfig.node.json', './tsconfig.app.json'],
+  tsconfigRootDir: import.meta.dirname,
+}
+```
+
+For React rules:
+
+```bash
+npm install eslint-plugin-react-x eslint-plugin-react-dom --save-dev
+```
+
+```ts
+import reactX from "eslint-plugin-react-x";
+import reactDom from "eslint-plugin-react-dom";
+
+export default tseslint.config([
+  {
+    files: ["**/*.{ts,tsx}"],
+    extends: [
+      reactX.configs["recommended-typescript"],
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
   },
-})
+]);
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ⚠️ Notes
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- Only environment variables prefixed with `VITE_` are exposed to the client.
