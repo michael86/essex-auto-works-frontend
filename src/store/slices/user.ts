@@ -8,6 +8,7 @@ export interface UserState {
   role: "admin" | "staff" | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  tokenVerified: boolean;
 }
 
 const initialState: UserState = {
@@ -18,6 +19,7 @@ const initialState: UserState = {
   role: null,
   isAuthenticated: false,
   isLoading: true,
+  tokenVerified: false,
 };
 
 export const userSlice = createSlice({
@@ -32,13 +34,26 @@ export const userSlice = createSlice({
       state.role = action.payload.role;
       state.isAuthenticated = true;
       state.isLoading = false;
+      state.tokenVerified = true;
     },
-    clearUser: () => initialState,
+
+    clearUser: (state) => {
+      state.email = null;
+      state.firstName = null;
+      state.lastName = null;
+      state.role = null;
+      state.isLoading = false;
+      state.tokenVerified = true;
+    },
+
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
+    },
+    setTokenVerified: (state, action: PayloadAction<boolean>) => {
+      state.tokenVerified = action.payload;
     },
   },
 });
 
-export const { setUser, clearUser, setLoading } = userSlice.actions;
+export const { setUser, clearUser, setLoading, setTokenVerified } = userSlice.actions;
 export default userSlice.reducer;

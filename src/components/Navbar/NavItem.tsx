@@ -1,14 +1,9 @@
 import { useRef, useState } from "react";
 import gsap from "gsap";
 import { CaretDownIcon } from "@radix-ui/react-icons";
+import { Link } from "@tanstack/react-router";
 
-const NavItem = ({
-  label,
-  links,
-}: {
-  label: string;
-  links: { label: string; href: string }[];
-}) => {
+const NavItem = ({ label, links }: { label: string; links: { label: string; href: string }[] }) => {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const iconRef = useRef<SVGSVGElement | null>(null);
@@ -39,18 +34,13 @@ const NavItem = ({
   };
 
   return (
-    <div
-      className="relative inline-block"
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
-    >
+    <div className="relative inline-block" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
       <div className="flex flex-col">
         <button className="inline-flex items-center gap-1 text-lg font-medium">
           {label}
           <CaretDownIcon ref={iconRef} className="transition-transform" />
         </button>
 
-        {/* dropdown now sits directly beneath the button */}
         {open && (
           <div
             ref={menuRef}
@@ -59,12 +49,9 @@ const NavItem = ({
             <ul className="py-2 text-sm text-gray-800">
               {links.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="block px-4 py-2 hover:bg-gray-100 transition"
-                  >
+                  <Link to={link.href} className="block px-4 py-2 hover:bg-gray-100 transition">
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

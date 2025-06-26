@@ -4,13 +4,7 @@ import { useGSAP } from "@gsap/react";
 import { useEffect, useRef } from "react";
 import logo from "../assets/splash_logo.png";
 
-const SplashScreen = ({
-  setShowSplash,
-  playLanding,
-}: {
-  setShowSplash: (v: boolean) => void;
-  playLanding: () => void;
-}) => {
+const SplashScreen = ({ playLanding }: { playLanding: () => void }) => {
   const isLoading = useAppSelector((s) => s.user.isLoading);
   const splashRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -32,11 +26,7 @@ const SplashScreen = ({
       gsap.to(splashRef.current, {
         opacity: 0,
         duration: 0.6,
-        onComplete: () => {
-          setShowSplash(false);
-          console.log("playing landing");
-          playLanding();
-        },
+        onComplete: () => playLanding(),
       });
     }
   }, [isLoading]);
