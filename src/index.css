@@ -1,1 +1,5 @@
 @import "tailwindcss";
+.radix-navigation-menu [hidden],
+.radix-navigation-menu [data-state="closed"] {
+  display: block !important;
+}
