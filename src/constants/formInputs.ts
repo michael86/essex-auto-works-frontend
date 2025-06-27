@@ -24,3 +24,13 @@ export const registerFormInputs: FormInputConfig[] = [
     type: "password",
   },
 ];
+
+export const loginFormInputs: FormInputConfig[] = [
+  { label: "Email", name: "email", autoComplete: "email", type: "email" },
+  {
+    label: "Password",
+    name: "password",
+    autoComplete: "password",
+    type: "password",
+  },
+];
