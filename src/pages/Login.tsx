@@ -1,10 +1,16 @@
+import { useLoginUser } from "@/api/hooks/useLoginUser";
 import FormInputs from "@/components/Form/FormInputs";
+import FormStatus from "@/components/Form/FormStatus";
 import { loginFormInputs } from "@/constants/formInputs";
 import { loginSchema, type LoginFormData } from "@/schema/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const Login = () => {
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -13,17 +19,26 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
+  const { mutateAsync, isError, isPending } = useLoginUser();
+
   const onSubmit = async (data: LoginFormData) => {
-    //Submit login data
+    setSuccess(null);
+    setError(null);
+    try {
+      await mutateAsync(data);
+    } catch (err: any) {
+      if ("message" in err) {
+        setError(err.message);
+        return;
+      }
+      setError("An unknown error happened");
+    }
   };
 
   return (
     <>
       <h1 className="text-white text-4xl text-center underline mt-5">Login</h1>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="max-w-sm mx-auto px-5 sm:px-0"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-sm mx-auto px-5 sm:px-0">
         {loginFormInputs.map(({ label, name, autoComplete, type = "text" }) => (
           <FormInputs
             key={name}
@@ -43,6 +58,8 @@ const Login = () => {
         >
           Submit
         </button>
+
+        <FormStatus successMessage={success} errorMessage={error} />
       </form>
     </>
   );

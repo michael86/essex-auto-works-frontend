@@ -7,6 +7,7 @@ interface UserRegistered {
 }
 
 export type RegisterUserResult = RateLimit | ValidationErrors | UserRegistered;
+export type LoginUserResult = RateLimit | ValidationErrors | UserRegistered;
 
 export interface RegisterUser {
   firstname: string;

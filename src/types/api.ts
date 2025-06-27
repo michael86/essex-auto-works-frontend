@@ -6,3 +6,5 @@ export type RegisterUser = (data: {
   email: string;
   password: string;
 }) => Promise<RegisterUserResult>;
+
+export type LoginUser = (data: { email: string; password: string }) => Promise<RegisterUserResult>;

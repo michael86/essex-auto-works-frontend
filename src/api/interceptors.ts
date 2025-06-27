@@ -20,7 +20,9 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    console.error(error);
     const status = error.response?.status;
+    const message = error.response?.data?.message;
 
     if (status === 400) {
       return Promise.reject({
@@ -32,7 +34,7 @@ api.interceptors.response.use(
     if (status === 401 || status === 403) {
       return Promise.reject({
         type: "AUTH_ERROR",
-        message: "Unauthorized or forbidden.",
+        message: message || "Unauthorized or forbidden.",
       });
     }
 
@@ -44,7 +46,7 @@ api.interceptors.response.use(
     }
 
     // e.g., 500 or network error
-    window.location.href = "/error"; // or show toast, modal, etc.
+    // window.location.href = "/error"; // or show toast, modal, etc.
     return Promise.reject({
       type: "INTERNAL_ERROR",
       message: "Something went wrong. Please try again later.",
