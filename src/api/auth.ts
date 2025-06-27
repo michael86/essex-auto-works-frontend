@@ -1,7 +1,8 @@
-import type { RegisterUser } from "../types/api";
-import { type UserState } from "../store/slices/user";
+import type { UserState } from "@/store/slices/user";
+import type { RegisterUser } from "@/types/api";
+import type { RegisterUserResult } from "@/types/auth";
+
 import api from "./interceptors";
-import type { RegisterUserResult } from "src/types/auth";
 
 export const fetchMe = async (): Promise<
   Omit<UserState, "isAuthenticated" | "isLoading">

@@ -1,6 +1,11 @@
 import { type AppDispatch } from "../";
-import { clearUser, setLoading, setTokenVerified, setUser } from "../slices/user";
-import { fetchMe } from "../../api/auth";
+import {
+  clearUser,
+  setLoading,
+  setTokenVerified,
+  setUser,
+} from "../slices/user";
+import { fetchMe } from "@/api/auth";
 
 export const verifySession = () => async (dispatch: AppDispatch) => {
   dispatch(setLoading(true));

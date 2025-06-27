@@ -2,7 +2,7 @@ import { useAppSelector } from "../store";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useEffect, useRef } from "react";
-import logo from "../assets/splash_logo.png";
+import logo from "@/assets/splash_logo.png";
 
 const SplashScreen = ({ playLanding }: { playLanding: () => void }) => {
   const isLoading = useAppSelector((s) => s.user.isLoading);
@@ -36,8 +36,15 @@ const SplashScreen = ({ playLanding }: { playLanding: () => void }) => {
       ref={splashRef}
       className="splash-container w-full h-screen bg-black flex flex-col items-center justify-center text-white"
     >
-      <div className="content-container flex flex-col items-center" ref={contentRef}>
-        <img src={logo} alt="splash logo" className="w-1/3 h-auto mb-4 origin-center" />
+      <div
+        className="content-container flex flex-col items-center"
+        ref={contentRef}
+      >
+        <img
+          src={logo}
+          alt="splash logo"
+          className="w-1/3 h-auto mb-4 origin-center"
+        />
         <h2 className="underline text-7xl origin-center">Loading...</h2>
       </div>
     </div>

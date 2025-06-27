@@ -1,38 +1,18 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import {
-  registerSchema,
-  type RegisterFormData,
-} from "../../schema/registerSchema";
-import { useRegisterUser } from "../../api/hooks/useRegisterUser";
-import { isApiError } from "../../utils/typeGuards";
-import RegisterInput from "./RegisterInput";
-import RegisterStatus from "./RegisterStatus";
-
-const formInputs = [
-  { label: "Firstname", name: "firstname", autoComplete: "given-name" },
-  { label: "Lastname", name: "lastname", autoComplete: "family-name" },
-  { label: "Email", name: "email", autoComplete: "email", type: "email" },
-  {
-    label: "Password",
-    name: "password",
-    autoComplete: "new-password",
-    type: "password",
-  },
-  {
-    label: "Confirm Password",
-    name: "confirmPassword",
-    autoComplete: "new-password",
-    type: "password",
-  },
-];
+import { registerSchema, type RegisterFormData } from "@/schema/registerSchema";
+import { useRegisterUser } from "@/api/hooks/useRegisterUser";
+import { isApiError } from "@/utils/typeGuards";
+import FormStatus from "@/components/Form/FormStatus";
+import FormInputs from "@/components/Form//FormInputs";
+import { registerFormInputs } from "@/constants/formInputs";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
-  const { mutateAsync, isPending, isError } = useRegisterUser();
+  const [success, setSuccess] = useState<string | null>(null);
+  const { mutateAsync, isPending } = useRegisterUser();
 
   const {
     register,
@@ -43,12 +23,15 @@ const RegisterForm = () => {
   });
 
   const onSubmit = async (data: RegisterFormData) => {
-    setSuccess(false);
+    setSuccess(null);
     setErrorMessage(null);
     try {
       await mutateAsync(data);
-      setSuccess(true);
+      setSuccess(
+        "Account Created. Please verify your email, don't forget to check your spam"
+      );
     } catch (error: any) {
+      process.env.NODE_ENV === "development" && console.warn(error);
       if (!isApiError(error)) return;
       if (error.type === "CONFLICT_ERROR") {
         setErrorMessage(
@@ -68,23 +51,25 @@ const RegisterForm = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-sm mx-auto px-5 sm:px-0"
       >
-        {formInputs.map(({ label, name, autoComplete, type = "text" }) => (
-          <RegisterInput
-            key={name}
-            label={label}
-            id={name as keyof RegisterFormData}
-            register={register(name as keyof RegisterFormData)}
-            autoComplete={autoComplete}
-            type={type}
-            error={errors[name as keyof RegisterFormData]?.message}
-            showPassword={type === "password" ? showPassword : undefined}
-            onTogglePassword={
-              type === "password"
-                ? () => setShowPassword((prev) => !prev)
-                : undefined
-            }
-          />
-        ))}
+        {registerFormInputs.map(
+          ({ label, name, autoComplete, type = "text" }) => (
+            <FormInputs
+              key={name}
+              label={label}
+              id={name as keyof RegisterFormData}
+              register={register(name as keyof RegisterFormData)}
+              autoComplete={autoComplete}
+              type={type}
+              error={errors[name as keyof RegisterFormData]?.message}
+              showPassword={type === "password" ? showPassword : undefined}
+              onTogglePassword={
+                type === "password"
+                  ? () => setShowPassword((prev) => !prev)
+                  : undefined
+              }
+            />
+          )
+        )}
 
         <button
           type="submit"
@@ -95,11 +80,7 @@ const RegisterForm = () => {
         </button>
       </form>
 
-      <RegisterStatus
-        isError={isError}
-        errorMessage={errorMessage}
-        success={success}
-      />
+      <FormStatus errorMessage={errorMessage} successMessage={success} />
     </>
   );
 };

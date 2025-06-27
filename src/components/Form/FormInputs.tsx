@@ -12,7 +12,7 @@ type Props = {
   onTogglePassword?: () => void;
 };
 
-const RegisterInput = ({
+const FormInputs = ({
   label,
   id,
   register,
@@ -38,7 +38,7 @@ const RegisterInput = ({
           type={isPassword && showPassword ? "text" : type}
           autoComplete={autoComplete}
           {...register}
-          className={`$${isPassword ? "pr-10" : ""} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
+          className={`${isPassword ? "pr-10" : ""} bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
         />
         {isPassword && (
           <button
@@ -92,4 +92,4 @@ const RegisterInput = ({
   );
 };
 
-export default RegisterInput;
+export default FormInputs;
