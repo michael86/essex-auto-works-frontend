@@ -1,8 +1,7 @@
-import NavItem from "./NavItem";
-import { useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { useAppSelector } from "@/store/index";
+import { useRef, useState } from "react";
+
+import NavMobileToggle from "./NavMobiletoggle";
+import NavAside from "./NavAside";
 
 const links = [
   [
@@ -16,21 +15,15 @@ const links = [
 ];
 
 const NavBar = () => {
-  const navRef = useRef<HTMLElement | null>(null);
-  const isAuthenticated = useAppSelector((s) => s.user.isAuthenticated);
+  const navRef = useRef<HTMLDivElement | null>(null);
 
-  useGSAP(() => {
-    if (!navRef.current) return;
-
-    gsap.fromTo(navRef.current, { y: "-150%", alpha: 0 }, { y: 0, alpha: 1 });
-  }, []);
+  const [open, setOpen] = useState(false);
 
   return (
-    <nav
-      className="bg-blue-800/80 text-white shadow-md shadow-black px-6 py-4 flex justify-end space-x-6"
-      ref={navRef}
-    >
-      <NavItem label="Account" links={links[isAuthenticated ? 0 : 1]} />
+    <nav>
+      <NavMobileToggle open={open} setOpen={setOpen} ref={navRef} />
+
+      <NavAside open={open} setOpen={setOpen} />
     </nav>
   );
 };

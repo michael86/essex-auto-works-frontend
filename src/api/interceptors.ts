@@ -20,13 +20,35 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401 || error.response?.status === 403) {
-      console.warn("Unauthorized or Forbidden. Session might be invalid.");
+    const status = error.response?.status;
 
-      // TODO:  trigger logout, redirect, etc.
+    if (status === 400) {
+      return Promise.reject({
+        type: "VALIDATION_ERROR",
+        details: error.response.data,
+      });
     }
 
-    return Promise.reject(error);
+    if (status === 401 || status === 403) {
+      return Promise.reject({
+        type: "AUTH_ERROR",
+        message: "Unauthorized or forbidden.",
+      });
+    }
+
+    if (status === 409) {
+      return Promise.reject({
+        type: "CONFLICT_ERROR",
+        message: error.response.data.message,
+      });
+    }
+
+    // e.g., 500 or network error
+    window.location.href = "/error"; // or show toast, modal, etc.
+    return Promise.reject({
+      type: "INTERNAL_ERROR",
+      message: "Something went wrong. Please try again later.",
+    });
   }
 );
 
