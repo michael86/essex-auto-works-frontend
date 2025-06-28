@@ -7,7 +7,11 @@ const NavAside: React.FC<Props> = ({ open, setOpen }) => {
   return (
     <aside
       id="default-sidebar"
-      className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform duration-300 ease-in-out ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
+      className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform duration-300 ease-in-out ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+         fixed top-0 left-0 z-40
+         w-64 h-screen
+         transition-transform duration-300 ease-in-out
+         -translate-x-full md:translate-x-0`}
       aria-label="Sidebar"
     >
       <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
@@ -33,11 +37,7 @@ const NavAside: React.FC<Props> = ({ open, setOpen }) => {
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              d={
-                !open
-                  ? "M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                  : "M6 18 18 6M6 6l12 12"
-              }
+              d={!open ? "M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" : "M6 18 18 6M6 6l12 12"}
             />
           </svg>
         </button>

@@ -5,6 +5,7 @@ export interface UserState {
   firstName: string | null;
   lastName: string | null;
   role: "admin" | "staff" | null;
+  emailVerified: number;
   isAuthenticated: boolean;
   isLoading: boolean;
   tokenVerified: boolean;
@@ -15,6 +16,7 @@ const initialState: UserState = {
   firstName: null,
   lastName: null,
   role: null,
+  emailVerified: 0,
   isAuthenticated: false,
   isLoading: false,
   tokenVerified: false,
@@ -32,6 +34,7 @@ export const userSlice = createSlice({
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
       state.role = action.payload.role;
+      state.emailVerified = action.payload.emailVerified;
       state.isAuthenticated = true;
       state.isLoading = false;
       state.tokenVerified = true;

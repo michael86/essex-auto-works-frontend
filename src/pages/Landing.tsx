@@ -11,7 +11,7 @@ const Landing = () => {
     <AuthGuard>
       <header>{isAuthenticated && <NavBar />}</header>
 
-      <main className="flex-1 ">
+      <main className="flex-1 md:ml-64">
         <Outlet />
       </main>
 
