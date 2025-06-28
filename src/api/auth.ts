@@ -1,6 +1,6 @@
 import type { UserState } from "@/store/slices/user";
 import type { LoginUser, RegisterUser } from "@/types/api";
-import type { RegisterUserResult } from "@/types/auth";
+import type { RegisterUserResult, UserLoggedIn } from "@/types/auth";
 
 import api from "./interceptors";
 
@@ -16,6 +16,5 @@ export const registerUser: RegisterUser = async (data) => {
 
 export const loginUser: LoginUser = async (data) => {
   const res = await api.post("/auth/login", data);
-  console.log("res ", res);
-  return res.data as RegisterUserResult;
+  return res.data as UserLoggedIn;
 };

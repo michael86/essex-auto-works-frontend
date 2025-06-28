@@ -2,15 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store";
 import { verifySession } from "@/store/thunks/verifySession";
 import SplashScreen from "@/components/SplashScreen";
+import { useNavigate } from "@tanstack/react-router";
 
 type Props = {
   children: React.ReactNode;
 };
 
 const AuthGuard = ({ children }: Props) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const isLoading = useAppSelector((s) => s.user.isLoading);
   const tokenVerified = useAppSelector((s) => s.user.tokenVerified);
-  const dispatch = useAppDispatch();
+  const isAuthenticated = useAppSelector((s) => s.user.isAuthenticated);
 
   const hasDispatched = useRef(false);
   const landingTween = useRef<gsap.core.Tween | null>(null);
@@ -24,6 +28,14 @@ const AuthGuard = ({ children }: Props) => {
       dispatch(verifySession());
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    if (tokenVerified && !isLoading) {
+      if (isAuthenticated) {
+        navigate({ to: "/dashboard" });
+      }
+    }
+  }, [tokenVerified, isLoading, isAuthenticated, navigate]);
 
   useEffect(() => {
     if (!shouldShowSplash && landingTween.current) {
