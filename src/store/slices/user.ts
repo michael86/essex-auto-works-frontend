@@ -18,7 +18,7 @@ const initialState: UserState = {
   lastName: null,
   role: null,
   isAuthenticated: false,
-  isLoading: true,
+  isLoading: false,
   tokenVerified: false,
 };
 
@@ -26,7 +26,10 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<Omit<UserState, "isAuthenticated" | "isLoading">>) => {
+    setUser: (
+      state,
+      action: PayloadAction<Omit<UserState, "isAuthenticated" | "isLoading">>
+    ) => {
       state.id = action.payload.id;
       state.email = action.payload.email;
       state.firstName = action.payload.firstName;
@@ -55,5 +58,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, clearUser, setLoading, setTokenVerified } = userSlice.actions;
+export const { setUser, clearUser, setLoading, setTokenVerified } =
+  userSlice.actions;
 export default userSlice.reducer;
