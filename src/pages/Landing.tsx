@@ -14,7 +14,7 @@ const Landing = () => {
     <AuthGuard>
       <header>{isAuthenticated && <NavBar />}</header>
 
-      <main className={`flex-1 ${!routes.includes(location.pathname) && "md:ml-64"}`}>
+      <main className={`flex-1 mt-15 md:mt-0 ${!routes.includes(location.pathname) && "md:ml-64"}`}>
         <Outlet />
       </main>
 
