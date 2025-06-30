@@ -3,7 +3,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import NavBar from "@/components/Navbar/NavBar";
 import AuthGuard from "@/components/AuthGuard";
 import { useAppSelector } from "../store";
-import { routes } from "@/constants/mainMarginLeftRoutes";
+import { sidebar, topbar } from "@/constants/layoutOffsetRoutes";
 
 const Landing = () => {
   const isAuthenticated = useAppSelector((s) => s.user.isAuthenticated);
@@ -14,7 +14,9 @@ const Landing = () => {
     <AuthGuard>
       <header>{isAuthenticated && <NavBar />}</header>
 
-      <main className={`flex-1 mt-15 md:mt-0 ${!routes.includes(location.pathname) && "md:ml-64"}`}>
+      <main
+        className={`flex-1  ${!sidebar.includes(location.pathname) && "md:ml-64"} ${!topbar.includes(location.pathname) && "mt-15 md:mt-0"}`}
+      >
         <Outlet />
       </main>
 
