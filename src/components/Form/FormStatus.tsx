@@ -1,9 +1,10 @@
 type Props = {
   errorMessage: string | null;
   successMessage: string | null;
+  button?: { text: string; classes: string; action: () => void };
 };
 
-const FormStatus = ({ errorMessage, successMessage }: Props) => {
+const FormStatus = ({ errorMessage, successMessage, button }: Props) => {
   return (
     <>
       {errorMessage && (
@@ -15,6 +16,13 @@ const FormStatus = ({ errorMessage, successMessage }: Props) => {
         <p className="text-green-500 underline text-center mx-auto text-2xl my-5 px-5">
           {successMessage}
         </p>
+      )}
+      {button && (
+        <div className="flex justify-center">
+          <button className={button.classes} onClick={button.action}>
+            {button.text}
+          </button>
+        </div>
       )}
     </>
   );

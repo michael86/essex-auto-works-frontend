@@ -1,17 +1,20 @@
-import { Outlet } from "@tanstack/react-router";
+import { Outlet, useLocation } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import NavBar from "@/components/Navbar/NavBar";
 import AuthGuard from "@/components/AuthGuard";
 import { useAppSelector } from "../store";
+import { routes } from "@/constants/mainMarginLeftRoutes";
 
 const Landing = () => {
   const isAuthenticated = useAppSelector((s) => s.user.isAuthenticated);
+
+  const location = useLocation();
 
   return (
     <AuthGuard>
       <header>{isAuthenticated && <NavBar />}</header>
 
-      <main className="flex-1 md:ml-64">
+      <main className={`flex-1 ${!routes.includes(location.pathname) && "md:ml-64"}`}>
         <Outlet />
       </main>
 

@@ -7,12 +7,15 @@ import { isApiError } from "@/utils/typeGuards";
 import FormStatus from "@/components/Form/FormStatus";
 import FormInputs from "@/components/Form//FormInputs";
 import { registerFormInputs } from "@/constants/formInputs";
+import { useNavigate } from "@tanstack/react-router";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const { mutateAsync, isPending } = useRegisterUser();
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -27,16 +30,12 @@ const RegisterForm = () => {
     setErrorMessage(null);
     try {
       await mutateAsync(data);
-      setSuccess(
-        "Account Created. Please verify your email, don't forget to check your spam"
-      );
+      setSuccess("Account Created. Please verify your email, don't forget to check your spam");
     } catch (error: any) {
       process.env.NODE_ENV === "development" && console.warn(error);
       if (!isApiError(error)) return;
       if (error.type === "CONFLICT_ERROR") {
-        setErrorMessage(
-          "Email already in use, please try again with a different email or log in"
-        );
+        setErrorMessage("Email already in use, please try again with a different email or log in");
         return;
       }
       if ("message" in error && typeof error.message === "string") {
@@ -47,29 +46,22 @@ const RegisterForm = () => {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="max-w-sm mx-auto px-5 sm:px-0"
-      >
-        {registerFormInputs.map(
-          ({ label, name, autoComplete, type = "text" }) => (
-            <FormInputs
-              key={name}
-              label={label}
-              id={name as keyof RegisterFormData}
-              register={register(name as keyof RegisterFormData)}
-              autoComplete={autoComplete}
-              type={type}
-              error={errors[name as keyof RegisterFormData]?.message}
-              showPassword={type === "password" ? showPassword : undefined}
-              onTogglePassword={
-                type === "password"
-                  ? () => setShowPassword((prev) => !prev)
-                  : undefined
-              }
-            />
-          )
-        )}
+      <form onSubmit={handleSubmit(onSubmit)} className="max-w-sm mx-auto px-5 sm:px-0">
+        {registerFormInputs.map(({ label, name, autoComplete, type = "text" }) => (
+          <FormInputs
+            key={name}
+            label={label}
+            id={name as keyof RegisterFormData}
+            register={register(name as keyof RegisterFormData)}
+            autoComplete={autoComplete}
+            type={type}
+            error={errors[name as keyof RegisterFormData]?.message}
+            showPassword={type === "password" ? showPassword : undefined}
+            onTogglePassword={
+              type === "password" ? () => setShowPassword((prev) => !prev) : undefined
+            }
+          />
+        ))}
 
         <button
           type="submit"
@@ -80,7 +72,20 @@ const RegisterForm = () => {
         </button>
       </form>
 
-      <FormStatus errorMessage={errorMessage} successMessage={success} />
+      <FormStatus
+        errorMessage={errorMessage}
+        successMessage={success}
+        button={
+          errorMessage
+            ? {
+                action: () => navigate({ to: "/forgot-password" }),
+                text: "Forgot Password",
+                classes:
+                  " mt-2 mb-2 py-2.5 px-5 me-2 mb-2 text-sm font-medium text-white focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:hover:text-white",
+              }
+            : undefined
+        }
+      />
     </>
   );
 };
