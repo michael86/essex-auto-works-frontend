@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../store";
 import { verifySession } from "@/store/thunks/verifySession";
 import SplashScreen from "@/components/SplashScreen";
 import { useLocation, useNavigate } from "@tanstack/react-router";
+import { unprotectedRoutes } from "@/constants/unprotectedRoutes";
 
 type Props = {
   children: React.ReactNode;
@@ -36,7 +37,15 @@ const AuthGuard = ({ children }: Props) => {
         return;
       }
 
-      if (!["/", "/login", "/register"].includes(route.pathname)) navigate({ to: "/login" });
+      const { pathname } = route;
+      const isUnprotected = unprotectedRoutes.some(
+        (path) => (path === "/" ? pathname === "/" : pathname.startsWith(path)) //Changed to startsWith to take into account tokens
+      );
+
+      if (!isUnprotected) {
+        console.log("redirecting");
+        navigate({ to: "/login" });
+      }
     }
   }, [tokenVerified, isLoading, isAuthenticated, navigate]);
 
