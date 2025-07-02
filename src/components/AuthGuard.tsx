@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store";
 import { verifySession } from "@/store/thunks/verifySession";
 import SplashScreen from "@/components/SplashScreen";
-import { useNavigate } from "@tanstack/react-router";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 
 type Props = {
   children: React.ReactNode;
@@ -11,6 +11,7 @@ type Props = {
 const AuthGuard = ({ children }: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const route = useLocation();
 
   const isLoading = useAppSelector((s) => s.user.isLoading);
   const tokenVerified = useAppSelector((s) => s.user.tokenVerified);
@@ -21,7 +22,6 @@ const AuthGuard = ({ children }: Props) => {
   const [fadeInReady, setFadeInReady] = useState(false);
 
   const shouldShowSplash = isLoading && !tokenVerified;
-
   useEffect(() => {
     if (!hasDispatched.current) {
       hasDispatched.current = true;
@@ -33,7 +33,10 @@ const AuthGuard = ({ children }: Props) => {
     if (tokenVerified && !isLoading) {
       if (isAuthenticated) {
         navigate({ to: "/dashboard" });
+        return;
       }
+
+      if (!["/", "/login", "/register"].includes(route.pathname)) navigate({ to: "/login" });
     }
   }, [tokenVerified, isLoading, isAuthenticated, navigate]);
 
