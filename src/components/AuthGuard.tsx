@@ -23,6 +23,7 @@ const AuthGuard = ({ children }: Props) => {
   const [fadeInReady, setFadeInReady] = useState(false);
 
   const shouldShowSplash = isLoading && !tokenVerified;
+
   useEffect(() => {
     if (!hasDispatched.current) {
       hasDispatched.current = true;

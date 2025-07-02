@@ -1,4 +1,4 @@
-import type { RateLimit, ValidationErrors } from "./genericApi";
+import type { ApiError, RateLimit, ValidationErrors } from "./genericApi";
 
 interface UserRegistered {
   status: "SUCCESS";
@@ -43,3 +43,11 @@ export interface RegisterUser {
   email: string;
   password: string;
 }
+
+export interface EmailVerified {
+  code: "EMAIL_VERIFIED";
+  message: "Email verified succesfully, you can now log in";
+  status: "SUCCESS";
+}
+
+export type VerifyEmailRequest = RateLimit | ValidationErrors | ApiError | EmailVerified;

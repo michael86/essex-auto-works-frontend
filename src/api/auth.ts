@@ -6,7 +6,6 @@ import api from "./interceptors";
 
 export const fetchMe = async (): Promise<Omit<UserState, "isAuthenticated" | "isLoading">> => {
   const res = await api.get("/auth/me", { withCredentials: true });
-  console.log(res);
   return res.data.data;
 };
 
