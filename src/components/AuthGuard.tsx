@@ -44,7 +44,6 @@ const AuthGuard = ({ children }: Props) => {
       );
 
       if (!isUnprotected) {
-        console.log("redirecting");
         navigate({ to: "/login" });
       }
     }
@@ -62,12 +61,16 @@ const AuthGuard = ({ children }: Props) => {
 
   return (
     <div
+      id="This-one"
       ref={(el) => {
+        //This isn't firing at all.... Investigate.
+        console.log("el ", el);
+        console.log("fadeInReady ", fadeInReady);
         if (el && fadeInReady) {
           landingTween.current = gsap.fromTo(
             el,
             { opacity: 0 },
-            { opacity: 1, duration: 0.6, ease: "power2.out", paused: true }
+            { opacity: 1, duration: 0.6, delay: 0.6, ease: "power2.out", paused: true }
           );
         }
       }}
