@@ -34,3 +34,14 @@ export const loginFormInputs: FormInputConfig[] = [
     type: "password",
   },
 ];
+
+export const forgotPasswordInputs: FormInputConfig[] = [
+  { label: "email", name: "email", autoComplete: "email", type: "email" },
+  { label: "Password", name: "password", autoComplete: "new-password", type: "password" },
+  {
+    label: "Confirm Password",
+    name: "confirmPassword",
+    autoComplete: "new-password",
+    type: "password",
+  },
+];

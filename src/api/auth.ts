@@ -1,5 +1,5 @@
 import type { UserState } from "@/store/slices/user";
-import type { LoginUser, RegisterUser } from "@/types/api";
+import type { LoginUser, RegisterUser, SendForgotPasswordEmail } from "@/types/api";
 import type { RegisterUserResult, UserLoggedIn } from "@/types/auth";
 
 import api from "./interceptors";
@@ -17,4 +17,8 @@ export const registerUser: RegisterUser = async (data) => {
 export const loginUser: LoginUser = async (data) => {
   const res = await api.post("/auth/login", data);
   return res.data as UserLoggedIn;
+};
+
+export const sendForgotPasswordEmail: SendForgotPasswordEmail = async (email) => {
+  await api.post("/auth/forgot-password", { email });
 };

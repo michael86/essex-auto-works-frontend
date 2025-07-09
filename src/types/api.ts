@@ -8,3 +8,5 @@ export type RegisterUser = (data: {
 }) => Promise<RegisterUserResult>;
 
 export type LoginUser = (data: { email: string; password: string }) => Promise<UserLoggedIn>;
+
+export type SendForgotPasswordEmail = (email: string) => Promise<void>;

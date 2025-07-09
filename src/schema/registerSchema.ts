@@ -6,17 +6,11 @@ export const registerSchema = z
     firstname: z
       .string()
       .min(1, "First name is required")
-      .regex(
-        nameRegex,
-        "First name must only contain letters and valid name characters"
-      ),
+      .regex(nameRegex, "First name must only contain letters and valid name characters"),
     lastname: z
       .string()
       .min(1, "Last name is required")
-      .regex(
-        nameRegex,
-        "Last name must only contain letters and valid name characters"
-      ),
+      .regex(nameRegex, "Last name must only contain letters and valid name characters"),
     email: z.string().email("Invalid email address"),
     password: z
       .string()
@@ -38,5 +32,12 @@ export const loginSchema = z.object({
   password: z.string(),
 });
 
+export const forgotPasswordSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string(),
+  confirmPassword: z.string(),
+});
+
 export type RegisterFormData = z.infer<typeof registerSchema>;
 export type LoginFormData = z.infer<typeof loginSchema>;
+export type forgotPasswordData = z.infer<typeof forgotPasswordSchema>;
