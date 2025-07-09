@@ -15,6 +15,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
 import { Route as AuthVerifyEmailTokenRouteImport } from './routes/auth/verify-email/$token'
+import { Route as AuthResetPasswordTokenRouteImport } from './routes/auth/reset-password/$token'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -46,6 +47,11 @@ const AuthVerifyEmailTokenRoute = AuthVerifyEmailTokenRouteImport.update({
   path: '/auth/verify-email/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthResetPasswordTokenRoute = AuthResetPasswordTokenRouteImport.update({
+  id: '/auth/reset-password/$token',
+  path: '/auth/reset-password/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/auth/reset-password/$token': typeof AuthResetPasswordTokenRoute
   '/auth/verify-email/$token': typeof AuthVerifyEmailTokenRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/auth/reset-password/$token': typeof AuthResetPasswordTokenRoute
   '/auth/verify-email/$token': typeof AuthVerifyEmailTokenRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/auth/reset-password/$token': typeof AuthResetPasswordTokenRoute
   '/auth/verify-email/$token': typeof AuthVerifyEmailTokenRoute
 }
 export interface FileRouteTypes {
@@ -80,6 +89,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/auth/forgot-password'
+    | '/auth/reset-password/$token'
     | '/auth/verify-email/$token'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/auth/forgot-password'
+    | '/auth/reset-password/$token'
     | '/auth/verify-email/$token'
   id:
     | '__root__'
@@ -96,6 +107,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/auth/forgot-password'
+    | '/auth/reset-password/$token'
     | '/auth/verify-email/$token'
   fileRoutesById: FileRoutesById
 }
@@ -105,6 +117,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
+  AuthResetPasswordTokenRoute: typeof AuthResetPasswordTokenRoute
   AuthVerifyEmailTokenRoute: typeof AuthVerifyEmailTokenRoute
 }
 
@@ -152,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthVerifyEmailTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/reset-password/$token': {
+      id: '/auth/reset-password/$token'
+      path: '/auth/reset-password/$token'
+      fullPath: '/auth/reset-password/$token'
+      preLoaderRoute: typeof AuthResetPasswordTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -161,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
+  AuthResetPasswordTokenRoute: AuthResetPasswordTokenRoute,
   AuthVerifyEmailTokenRoute: AuthVerifyEmailTokenRoute,
 }
 export const routeTree = rootRouteImport

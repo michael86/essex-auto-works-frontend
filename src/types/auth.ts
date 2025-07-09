@@ -40,8 +40,6 @@ export interface RegisterUser {
 export interface RegisterUser {
   firstname: string;
   lastname: string;
-  email: string;
-  password: string;
 }
 
 export interface EmailVerified {
@@ -50,4 +48,12 @@ export interface EmailVerified {
   status: "SUCCESS";
 }
 
+export interface TokenVerified {
+  status: "SUCCESS";
+  code: "TOKEN_VALID";
+  message: "token is valid";
+}
+
 export type VerifyEmailRequest = RateLimit | ValidationErrors | ApiError | EmailVerified;
+
+export type VerifyToken = RateLimit | ValidationErrors | ApiError | TokenVerified;

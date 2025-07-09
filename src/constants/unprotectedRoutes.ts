@@ -4,4 +4,5 @@ export const unprotectedRoutes = [
   "/register",
   "/auth/forgot-password",
   "/auth/verify-email/",
+  "/auth/reset-password/",
 ];
