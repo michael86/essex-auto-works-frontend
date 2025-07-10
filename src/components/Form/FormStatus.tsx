@@ -1,12 +1,13 @@
 type Props = {
-  errorMessage: string | null;
-  successMessage: string | null;
+  errorMessage?: string;
+  successMessage?: string;
   button?: { text: string; classes: string; action: () => void };
+  containerClasses?: string;
 };
 
-const FormStatus = ({ errorMessage, successMessage, button }: Props) => {
+const FormStatus = ({ containerClasses, errorMessage, successMessage, button }: Props) => {
   return (
-    <>
+    <div className={containerClasses}>
       {errorMessage && (
         <p className="text-red-500 underline text-center mx-auto text-2xl mt-5 px-5">
           {errorMessage}
@@ -24,7 +25,7 @@ const FormStatus = ({ errorMessage, successMessage, button }: Props) => {
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

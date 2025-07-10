@@ -11,8 +11,7 @@ import { setUser } from "@/store/slices/user";
 import { useNavigate } from "@tanstack/react-router";
 
 const Login = () => {
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [error, setError] = useState<string | undefined>(undefined);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -27,8 +26,7 @@ const Login = () => {
   const { mutateAsync, isPending } = useLoginUser();
 
   const onSubmit = async (data: LoginFormData) => {
-    setSuccess(null);
-    setError(null);
+    setError(undefined);
     try {
       const res = await mutateAsync(data);
       dispatch(setUser({ ...res.data }));
@@ -43,7 +41,7 @@ const Login = () => {
   };
 
   return (
-    <>
+    <section className="flex flex-col justify-center">
       <h1 className="text-white text-4xl text-center underline mt-5">Login</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-sm mx-auto px-5 sm:px-0">
         {loginFormInputs.map(({ label, name, autoComplete, type = "text" }) => (
@@ -79,9 +77,17 @@ const Login = () => {
           {isPending ? "Submitting…" : "Submit"}
         </button>
 
-        <FormStatus successMessage={success} errorMessage={error} />
+        <FormStatus errorMessage={error} />
       </form>
-    </>
+      {error && (
+        <button
+          onClick={() => navigate({ to: "/auth/forgot-password" })}
+          className="mt-5  w-85 mx-auto md:w-auto text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 "
+        >
+          Forgot Password
+        </button>
+      )}
+    </section>
   );
 };
 
