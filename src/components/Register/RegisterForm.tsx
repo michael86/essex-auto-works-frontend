@@ -11,8 +11,8 @@ import { useNavigate } from "@tanstack/react-router";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+  const [success, setSuccess] = useState<string | undefined>(undefined);
   const { mutateAsync, isPending } = useRegisterUser();
 
   const navigate = useNavigate();
@@ -26,8 +26,8 @@ const RegisterForm = () => {
   });
 
   const onSubmit = async (data: RegisterFormData) => {
-    setSuccess(null);
-    setErrorMessage(null);
+    setSuccess(undefined);
+    setErrorMessage(undefined);
     try {
       await mutateAsync(data);
       setSuccess("Account Created. Please verify your email, don't forget to check your spam");

@@ -10,7 +10,7 @@ export const Route = createFileRoute("/auth/reset-password/$token")({
     try {
       const res = await api.get<VerifyToken>(`/auth/reset-password/validate/${token}`);
       return {
-        code: "code" in res.data && res.data.code === "TOKEN_VALID" ? token : undefined,
+        token: "code" in res.data && res.data.code === "TOKEN_VALID" ? token : undefined,
       };
     } catch (err) {
       throw redirect({ to: "/auth/forgot-password", replace: true });
