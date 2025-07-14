@@ -29,17 +29,18 @@ const AuthGuard = ({ children }: Props) => {
 
   useEffect(() => {
     if (!isLoading && tokenVerified) {
-      if (isAuthenticated) {
-        navigate({ to: "/dashboard" });
-      } else {
-        const { pathname } = route;
-        const isUnprotected = unprotectedRoutes.some((path) =>
-          path === "/" ? pathname === "/" : pathname.startsWith(path)
-        );
-        if (!isUnprotected) {
-          navigate({ to: "/login" });
-        }
+      const { pathname } = route;
+
+      const isUnprotected = unprotectedRoutes.some((path) =>
+        path === "/" ? pathname === "/" : pathname.startsWith(path)
+      );
+
+      if (!isAuthenticated && !isUnprotected) {
+        navigate({ to: "/" });
+        return;
       }
+
+      if (isAuthenticated && isUnprotected) navigate({ to: "/dashboard" });
     }
   }, [isLoading, tokenVerified, isAuthenticated, navigate, route]);
 

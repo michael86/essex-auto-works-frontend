@@ -13,6 +13,8 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CustomersManageRouteImport } from './routes/customers/manage'
+import { Route as CustomersAddRouteImport } from './routes/customers/add'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
 import { Route as AuthVerifyEmailTokenRouteImport } from './routes/auth/verify-email/$token'
 import { Route as AuthResetPasswordTokenRouteImport } from './routes/auth/reset-password/$token'
@@ -37,6 +39,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CustomersManageRoute = CustomersManageRouteImport.update({
+  id: '/customers/manage',
+  path: '/customers/manage',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomersAddRoute = CustomersAddRouteImport.update({
+  id: '/customers/add',
+  path: '/customers/add',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
   id: '/auth/forgot-password',
   path: '/auth/forgot-password',
@@ -59,6 +71,8 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/customers/add': typeof CustomersAddRoute
+  '/customers/manage': typeof CustomersManageRoute
   '/auth/reset-password/$token': typeof AuthResetPasswordTokenRoute
   '/auth/verify-email/$token': typeof AuthVerifyEmailTokenRoute
 }
@@ -68,6 +82,8 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/customers/add': typeof CustomersAddRoute
+  '/customers/manage': typeof CustomersManageRoute
   '/auth/reset-password/$token': typeof AuthResetPasswordTokenRoute
   '/auth/verify-email/$token': typeof AuthVerifyEmailTokenRoute
 }
@@ -78,6 +94,8 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/customers/add': typeof CustomersAddRoute
+  '/customers/manage': typeof CustomersManageRoute
   '/auth/reset-password/$token': typeof AuthResetPasswordTokenRoute
   '/auth/verify-email/$token': typeof AuthVerifyEmailTokenRoute
 }
@@ -89,6 +107,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/auth/forgot-password'
+    | '/customers/add'
+    | '/customers/manage'
     | '/auth/reset-password/$token'
     | '/auth/verify-email/$token'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +118,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/auth/forgot-password'
+    | '/customers/add'
+    | '/customers/manage'
     | '/auth/reset-password/$token'
     | '/auth/verify-email/$token'
   id:
@@ -107,6 +129,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/auth/forgot-password'
+    | '/customers/add'
+    | '/customers/manage'
     | '/auth/reset-password/$token'
     | '/auth/verify-email/$token'
   fileRoutesById: FileRoutesById
@@ -117,6 +141,8 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
+  CustomersAddRoute: typeof CustomersAddRoute
+  CustomersManageRoute: typeof CustomersManageRoute
   AuthResetPasswordTokenRoute: typeof AuthResetPasswordTokenRoute
   AuthVerifyEmailTokenRoute: typeof AuthVerifyEmailTokenRoute
 }
@@ -151,6 +177,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/customers/manage': {
+      id: '/customers/manage'
+      path: '/customers/manage'
+      fullPath: '/customers/manage'
+      preLoaderRoute: typeof CustomersManageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customers/add': {
+      id: '/customers/add'
+      path: '/customers/add'
+      fullPath: '/customers/add'
+      preLoaderRoute: typeof CustomersAddRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/forgot-password': {
       id: '/auth/forgot-password'
       path: '/auth/forgot-password'
@@ -181,6 +221,8 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
+  CustomersAddRoute: CustomersAddRoute,
+  CustomersManageRoute: CustomersManageRoute,
   AuthResetPasswordTokenRoute: AuthResetPasswordTokenRoute,
   AuthVerifyEmailTokenRoute: AuthVerifyEmailTokenRoute,
 }
